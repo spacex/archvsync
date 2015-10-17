@@ -250,7 +250,10 @@ TO=${TO:-"/srv/mirrors/debian/"}
 PROGRAM=${PROGRAM:-"${NAME}"}
 
 # Where to send mails about mirroring to?
-if [ "x$(hostname -d)x" != "xdebian.orgx" ]; then
+HOSTNAME=$(hostname -f)
+DOMAIN_NAME=${HOSTNAME##$(hostname -s)}
+DOMAIN_NAME=${DOMAIN_NAME##.} # If the line above left a . at the front, remove
+if [ "x${DOMAIN_NAME}x" != "xdebian.orgx" ]; then
     # We are not on a debian.org host
     MAILTO=${MAILTO:-"root"}
 else
